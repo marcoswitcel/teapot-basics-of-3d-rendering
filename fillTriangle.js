@@ -1,3 +1,12 @@
+import Vec3 from "./Vec3.js";
+import DepthBuffer from "./depthBuffer.js";
+
+/**
+ * @param {Vec3} a 
+ * @param {Vec3} b 
+ * @param {Vec3} c 
+ * @returns 
+ */
 function cross(a, b, c) {
     return (b.x - a.x) * -(c.y - a.y) - -(b.y - a.y) * (c.x - a.x);
 }
@@ -5,11 +14,12 @@ function cross(a, b, c) {
 /**
  * 
  * @param {ImageData} imageData 
- * @param {Object} v0 
- * @param {Object} v1 
- * @param {Object} v2 
+ * @param {DepthBuffer} depthBuffer
+ * @param {Any} v0 
+ * @param {Any} v1 
+ * @param {Any} v2 
  */
-export default function fillTriangle(imageData, v0, v1, v2)
+export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
 {
     var minX = Math.floor(Math.min(v0.x, v1.x, v2.x));
     var maxX = Math.ceil(Math.max(v0.x, v1.x, v2.x));
