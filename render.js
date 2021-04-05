@@ -10,25 +10,21 @@ export function crossProduct(a, b) {
     };
 }
 
-export function  rotate(angle, cx, cy) {
-    for(let point of this.points) {
-
-
-        const s = Math.sin(angle);
-        const c = Math.cos(angle);
-      
-        // translate point back to origin:
-        point.x -= cx;
-        point.y -= cy;
-      
-        // rotate point
-        const xnew = point.x * c - point.y * s;
-        const ynew = point.x * s + point.y * c;
-      
-        // translate point back:
-        point.x = xnew + cx;
-        point.y = ynew + cy;
-    }
+export function  rotate(point, angle, cx, cy) {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+    
+    // translate point back to origin:
+    point.x -= cx;
+    point.y -= cy;
+    
+    // rotate point
+    const xnew = point.x * c - point.y * s;
+    const ynew = point.x * s + point.y * c;
+    
+    // translate point back:
+    point.x = xnew + cx;
+    point.y = ynew + cy;
 }
 
 /**

@@ -1,20 +1,24 @@
-export default class DepthBuffer extends Uint16Array
-{
-    constructor(width, height)
-    {
+export default class DepthBuffer extends Uint16Array {
+    /**
+     * 
+     * @param {Number} width 
+     * @param {Number} height 
+     */
+    constructor(width, height) {
         super(width * height);
         
         this.width = width;
         this.height = height;
     }
-    // add some properties and methods to make using this easier
-    clear()
-    {
+
+    /**
+     * seta todos os pixeis para o valor máximo de um UInt16  ( 65535 )
+     */
+    clear() {
         this.fill(65535);
     }
 
-    getDepth(x, y)
-    {
+    getDepth(x, y) {
         return this[y * this.width + x] / 65535.0;
     }
 
@@ -23,8 +27,7 @@ export default class DepthBuffer extends Uint16Array
         this[y * this.width + x] = (v * 65535) | 0;
     }
 
-    testDepth(x, y, v)
-    {
+    testDepth(x, y, v) {
         var value = (v * 65535) | 0;
         if (value < 0 || value > 65535) {
             return false;
@@ -35,5 +38,5 @@ export default class DepthBuffer extends Uint16Array
             return true;
         }
         return false;
-    };
+    }
 }

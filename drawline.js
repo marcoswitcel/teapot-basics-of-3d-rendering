@@ -1,8 +1,9 @@
 //@ts-check
 
 /**
- * draws a line using Bresenham's line algorithm (integer version)
+ * Denha uma linha usando o algorítmo deBresenham (versão que usa números inteiros)
  * @note https://github.com/ssloy/tinyrenderer/wiki/Lesson-1:-Bresenham%E2%80%99s-Line-Drawing-Algorithm
+ * 
  * 
  * @param {ImageData} imageData 
  * @param {Number} x0 
@@ -12,15 +13,14 @@
  * 
  * @returns {void}
  */
-export default function drawLine(imageData, x0, y0, x1, y1)
-{
-    // convert all coordinates to integers
+export default function drawLine(imageData, x0, y0, x1, y1) {
+    // Converte todas as coordenadas para números inteiros
     x0 |= 0;
     y0 |= 0;
     x1 |= 0;
     y1 |= 0;
   
-    // get binary pixel data array
+    // obtém o array binários de cores dos pixels
     const data = imageData.data;
 
     const steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
@@ -45,16 +45,13 @@ export default function drawLine(imageData, x0, y0, x1, y1)
     
     var index = 0;
     var y = y0;
-    for (var x = x0; x <= x1; x++)
-    {
+    
+    for (var x = x0; x <= x1; x++) {
         // index is vertical coordinate times width, plus horizontal coordinate, 
         // times 4 because every pixel consists of 4 bytes
-        if (steep)
-        {
+        if (steep) {
             index = (x * imageData.width + y) * 4; // y, x
-        }
-        else
-        {
+        } else {
             index = (y * imageData.width + x) * 4; // x, y
         }
 

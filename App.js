@@ -12,7 +12,6 @@ export default class App {
             this.height = height;
         }
 
-
         this.acquireCanvas(canvasElement);
     }
     

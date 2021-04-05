@@ -3,11 +3,8 @@ import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
 import render, { clear, rotate } from './render.js';
 
-// add all properties on the IO object to the window object
-// so they can be used without prefixing "IO."
-
-// main function called on load
-async function run() {
+// Carrega 
+async function loadAndStartModel() {
 
     const rawContent = await fetch('teapot.obj')
         .then((response) => response.text());
@@ -16,15 +13,9 @@ async function run() {
     console.time('tempo de parse');
     let model = parseObj(rawContent);
     console.timeEnd('tempo de parse');
-    // start main program
+    
+    // Inicia o render
     start(model);
-
-    //@ts-expect-error
-    window.doItAgain = () => start(model);
-    //@ts-expect-error
-    window.model = model;
-    //@ts-expect-error
-    window.rotate = rotate;
 }
 
 
@@ -34,40 +25,56 @@ function start(model) {
     const HEIGHT = 480;
 
     // set our canvas size
+    /** @type {HTMLCanvasElement} @ts-expect-error*/
+    //@ts-expect-error
     let canvas = document.getElementById("canvas");
 
-    //@ts-expect-error
     canvas.width = WIDTH;
-    //@ts-expect-error
     canvas.height = HEIGHT;
+    // clear our canvas to opaque black
+
+    var context = canvas.getContext("2d");
     
     // create depth buffer
     // use Uint16 because we only need a little precision and we save 2 bytes per pixel this way
     const depthBuffer = new DepthBuffer(WIDTH, HEIGHT);
     // clear depth buffer and attach to imageData
-    depthBuffer.clear();
     
-    // clear our canvas to opaque black
-    //@ts-expect-error
-    var context = canvas.getContext("2d");
-    clear(context, "rgb(100, 149, 237)", WIDTH, HEIGHT);
+    requestAnimationFrame(function update() {
+        depthBuffer.clear();
+        clear(context, "rgb(100, 149, 237)", WIDTH, HEIGHT);
+    
+        // get image data for direct pixel access
+        var imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
+    
+        render(model, imageData, depthBuffer, {
+            // some drawing positioning
+            centerX : WIDTH / 2.0,
+            centerY : HEIGHT / 2.0 + 150,
+            scale : 100,
+            // create our zFar and zNear clip planes
+            zFar  : -3.5,
+            zNear : 3.5,
+        });
+    
+        // write our new pixels to the canvas
+        context.putImageData(imageData, 0, 0);
+        
+        return;
+        
+        console.time('tempo para rotacionar o bule:');
+        model.verts.map(e => {
+            const point = {x: e.x, y: e.z};
+            rotate(point, Math.PI / 180 * 1, 0,0);
+            e.x = point.x;
+            e.z = point.y;
+            return  e;
+        })
+        console.timeEnd('tempo para rotacionar o bule:');
 
-    // get image data for direct pixel access
-    var imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
-
-    render(model, imageData, depthBuffer, {
-        // some drawing positioning
-        centerX : WIDTH / 2.0,
-        centerY : HEIGHT / 2.0 + 150,
-        scale : 100,
-        // create our zFar and zNear clip planes
-        zFar  : -2.5,
-        zNear : 2.5,
+        requestAnimationFrame(update);
     });
-
-    // write our new pixels to the canvas
-    context.putImageData(imageData, 0, 0);
 }
 
 // run our program when the document's loaded
-document.body.onload = run;
+window.addEventListener('load', loadAndStartModel);
