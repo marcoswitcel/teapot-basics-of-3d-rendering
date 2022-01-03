@@ -2,6 +2,8 @@ import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
 import render, { clear, rotate } from './render.js';
 
+let stopped = true;
+
 // Carrega 
 async function loadAndStartModel() {
     const response = await fetch('teapot.obj')
@@ -15,6 +17,7 @@ async function loadAndStartModel() {
     // Inicia o render
     start(model);
 }
+
 /**
  * @param {Object} model 
  */
@@ -38,7 +41,7 @@ function start(model) {
     const depthBuffer = new DepthBuffer(WIDTH, HEIGHT);
     // clear depth buffer and attach to imageData
     
-    requestAnimationFrame(function update() {
+    const updateDrawing = function update() {
         depthBuffer.clear();
         clear(context, "rgb(100, 149, 237)", WIDTH, HEIGHT);
     
@@ -58,7 +61,6 @@ function start(model) {
         // write our new pixels to the canvas
         context.putImageData(imageData, 0, 0);
         
-        return;
         
         console.time('tempo para rotacionar o bule:');
         model.verts.map(e => {
@@ -70,7 +72,30 @@ function start(model) {
         })
         console.timeEnd('tempo para rotacionar o bule:');
 
+        if (stopped) return;
         requestAnimationFrame(update);
+    }
+
+    // Força primeiro desenho
+    updateDrawing();
+
+    // Muda o estado da Flag que controla a rotação e chama a função de desenho de novo
+    document.getElementById('iniciarRotacao').addEventListener('click', () => {
+        if (stopped) {
+            stopped = !stopped;
+            updateDrawing();
+        } else {
+            stopped = !stopped;
+        }
+    });
+
+    // Muda o estado da Flag que controla a rotação
+    document.getElementById('iniciarTelaCheia').addEventListener('click', () => {
+        /** @type {HTMLCanvasElement} @ts-expect-error*/
+        //@ts-expect-error
+        let canvas = document.getElementById("canvas");
+
+        canvas.requestFullscreen();
     });
 }
 

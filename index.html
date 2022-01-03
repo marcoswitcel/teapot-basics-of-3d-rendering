@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireframe</title>
+    <title>Renderização 3D com JavaScript - Teapot</title>
+    <meta name="description" content="Renderização 3D baseada em CPU com JavaScript - Teapot">
+    <style>
+        canvas {
+            margin: auto;
+            display: block;
+            margin-top: 16px;
+        }
+        h1 {
+
+            text-align: center;
+        }
+        .buttons {
+            margin-top: 16px;
+            text-align: center;
+        }
+        .text {
+            max-width: 800px;
+            margin: 32px auto 0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <h1>Renderização 3D com JavaScript - Teapot</h1>
     <canvas id="canvas" moz-opaque style="border: 1px solid black"></canvas>
-
+    <div class="buttons">
+        <button id="iniciarRotacao" type="button">Rotacionar</button>
+        <button id="iniciarTelaCheia" type="button">Entrar em modo tela cheia</button>
+    </div>
+    <p class="text">
+        Código produzido a partir das explicações e códigos presentes na série de tutoriais presentes nesse Blog.
+        <a href="https://kitsunegames.com/post/development/2016/07/11/canvas3d-3d-rendering-in-javascript/">https://kitsunegames.com/post/development/2016/07/11/canvas3d-3d-rendering-in-javascript/</a>
+    </p>
     <script src="index.js" type="module"></script>
 </body>
 </html>
