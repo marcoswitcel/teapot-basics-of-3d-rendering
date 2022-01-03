@@ -1,5 +1,5 @@
 /**
- * Denha uma linha usando o algorítmo deBresenham (versão que usa números inteiros)
+ * Desenha uma linha usando o algorítmo de Bresenham (versão que usa números inteiros)
  * @note https://github.com/ssloy/tinyrenderer/wiki/Lesson-1:-Bresenham%E2%80%99s-Line-Drawing-Algorithm
  * 
  * 

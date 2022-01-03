@@ -1,7 +1,7 @@
 /**
  *
  */
-class Vec3
+export default class Vec3
 {
     /**
      * @param {number} x
@@ -15,5 +15,3 @@ class Vec3
         this.z = z;
     }
 }
-
-export default Vec3;

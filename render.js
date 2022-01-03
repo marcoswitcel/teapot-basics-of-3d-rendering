@@ -1,6 +1,10 @@
 import DepthBuffer from './depthBuffer.js';
 import fillTriangle from './fillTriangle.js';
 
+/**
+ * @typedef {import('./Vec3.js').default} Vec3
+ */
+
 export function crossProduct(a, b) {
     return {
         x: a.y * b.z - a.z * b.y,
@@ -45,7 +49,7 @@ export function isCcw(v0, v1, v2) {
 
 /**
  * 
- * @param {Object} model 
+ * @param {{ verts: Vec3[], faces: number[][] }} model 
  * @param {ImageData} imageData 
  * @param {DepthBuffer} depthBuffer 
  */

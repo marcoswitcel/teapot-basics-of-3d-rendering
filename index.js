@@ -2,6 +2,10 @@ import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
 import render, { clear, rotate } from './render.js';
 
+/**
+ * @typedef {import('./Vec3.js').default} Vec3
+ */
+
 let stopped = true;
 
 // Carrega 
@@ -19,7 +23,7 @@ async function loadAndStartModel() {
 }
 
 /**
- * @param {Object} model 
+ * @param {{ verts: Vec3[], faces: number[][] }} model 
  */
 function start(model) {
     const WIDTH = 800;
