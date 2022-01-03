@@ -1,4 +1,3 @@
-//@ts-check
 import DepthBuffer from './depthBuffer.js';
 import fillTriangle from './fillTriangle.js';
 

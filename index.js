@@ -1,4 +1,3 @@
-//@ts-check
 import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
 import render, { clear, rotate } from './render.js';

@@ -15,9 +15,9 @@ function cross(a, b, c) {
  * 
  * @param {ImageData} imageData 
  * @param {DepthBuffer} depthBuffer
- * @param {Any} v0 
- * @param {Any} v1 
- * @param {Any} v2 
+ * @param {any} v0 
+ * @param {any} v1 
+ * @param {any} v2 
  */
 export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
 {
@@ -36,6 +36,7 @@ export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
     var props = Object.getOwnPropertyNames(v0);
     
     // p is our 2D pixel location point
+    /** @type {Vec3} */
     var p = {};  
     
     // fragment is the resulting pixel with all the vertex attributes interpolated

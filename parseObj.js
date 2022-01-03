@@ -1,5 +1,3 @@
-//@ts-check
-
 /**
  * @typedef {Object} Vec3
  * @property {number} x
