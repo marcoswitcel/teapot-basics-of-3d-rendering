@@ -5,11 +5,10 @@ import render, { clear, rotate } from './render.js';
 
 // Carrega 
 async function loadAndStartModel() {
+    const response = await fetch('teapot.obj')
+    const rawContent = await response.text();
 
-    const rawContent = await fetch('teapot.obj')
-        .then((response) => response.text());
-
-    // parse our teapot obj model file
+    // parseia nosso arquivo de modelo .obj
     console.time('tempo de parse');
     let model = parseObj(rawContent);
     console.timeEnd('tempo de parse');
@@ -17,9 +16,9 @@ async function loadAndStartModel() {
     // Inicia o render
     start(model);
 }
-
-
-
+/**
+ * @param {Object} model 
+ */
 function start(model) {
     const WIDTH = 800;
     const HEIGHT = 480;

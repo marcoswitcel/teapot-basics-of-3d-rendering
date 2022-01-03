@@ -1,10 +1,17 @@
 //@ts-check
 
 /**
+ * @typedef {Object} Vec3
+ * @property {number} x
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
  * parses an obj file from a text string
  * 
  * @param {String} text 
- * @returns {Object}
+ * @returns {{ verts: Vec3[], faces: Vec3[] }}
  */
 export default function parseObj(text) {
     var verts = [];
