@@ -3,7 +3,7 @@ import DepthBuffer from './depthBuffer.js';
 import render, { clear, rotate } from './render.js';
 
 /**
- * @typedef {import('./Vec3.js').default} Vec3
+ * @typedef {import('./vec3.js').default} Vec3
  */
 
 let stopped = true;

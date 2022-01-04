@@ -1,4 +1,4 @@
-import Vec3 from "./Vec3.js";
+import Vec3 from "./vec3.js";
 import DepthBuffer from "./depthBuffer.js";
 
 /**
