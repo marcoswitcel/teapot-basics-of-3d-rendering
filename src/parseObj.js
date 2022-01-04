@@ -1,5 +1,5 @@
 /**
- * @typedef {import('./vec3.js').default} Vec3
+ * @typedef {import('./Vec3.js').default} Vec3
  */
 
 /**

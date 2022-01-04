@@ -2,7 +2,7 @@ import DepthBuffer from './depthBuffer.js';
 import fillTriangle from './fillTriangle.js';
 
 /**
- * @typedef {import('./vec3.js').default} Vec3
+ * @typedef {import('./Vec3.js').default} Vec3
  */
 
 export function crossProduct(a, b) {
