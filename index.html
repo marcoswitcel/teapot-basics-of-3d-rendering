@@ -26,14 +26,30 @@
             margin: 32px auto 0;
             text-align: center;
         }
+        .wireframeCheckLabel, button {
+            display: inline-block;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1.1;
+            padding: 1em;
+            border: 1px solid black;
+            margin: 2px;
+        }
+        .wireframeCheckLabel input {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
     <h1>Renderização 3D com JavaScript - Teapot</h1>
     <canvas id="canvas" moz-opaque style="border: 1px solid black"></canvas>
     <div class="buttons">
-        <button id="iniciarRotacao" type="button">Rotacionar</button>
+        <button id="iniciarRotacao" type="button">Ativar animação de rotação</button>
         <button id="iniciarTelaCheia" type="button">Entrar em modo tela cheia</button>
+        <label class="wireframeCheckLabel">
+            <input type="checkbox" name="wireframe" id="wireframeCheck">
+            Modo wireFrame
+        </label>
     </div>
     <p class="text">
         Código produzido a partir das explicações e códigos presentes na série de tutoriais presentes nesse Blog.

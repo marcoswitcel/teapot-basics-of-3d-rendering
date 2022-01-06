@@ -1,12 +1,17 @@
 import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
-import render, { clear, rotate } from './render.js';
+import render, { clear, renderWireframe, rotate } from './render.js';
+import { isMobile } from './utils.js';
 
 /**
  * @typedef {import('./Vec3.js').default} Vec3
  */
 
+/** @type {boolean} */
 let stopped = true;
+
+/** @type {boolean} */
+let wireframeRender = isMobile();
 
 // Carrega 
 async function loadAndStartModel() {
@@ -29,21 +34,18 @@ function start(model) {
     const WIDTH = 800;
     const HEIGHT = 480;
 
-    // set our canvas size
-    /** @type {HTMLCanvasElement} @ts-expect-error*/
-    //@ts-expect-error
+    /** @type {HTMLCanvasElement} */ //@ts-expect-error
     let canvas = document.getElementById("canvas");
 
+    // Seta o novo tamanho do canvas
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
-    // clear our canvas to opaque black
 
     var context = canvas.getContext("2d");
     
     // create depth buffer
     // use Uint16 because we only need a little precision and we save 2 bytes per pixel this way
     const depthBuffer = new DepthBuffer(WIDTH, HEIGHT);
-    // clear depth buffer and attach to imageData
     
     const updateDrawing = function update() {
         depthBuffer.clear();
@@ -52,15 +54,24 @@ function start(model) {
         // get image data for direct pixel access
         var imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
     
-        render(model, imageData, depthBuffer, {
-            // some drawing positioning
-            centerX : WIDTH / 2.0,
-            centerY : HEIGHT / 2.0 + 150,
-            scale : 100,
-            // create our zFar and zNear clip planes
-            zFar  : -3.5,
-            zNear : 3.5,
-        });
+        if (wireframeRender) {
+            renderWireframe(model, imageData, {
+                // some drawing positioning
+                centerX : WIDTH / 2.0,
+                centerY : HEIGHT / 2.0 + 150,
+                scale : 100,
+            });
+        } else {
+            render(model, imageData, depthBuffer, {
+                // some drawing positioning
+                centerX : WIDTH / 2.0,
+                centerY : HEIGHT / 2.0 + 150,
+                scale : 100,
+                // create our zFar and zNear clip planes
+                zFar  : -3.5,
+                zNear : 3.5,
+            });
+        }
     
         // write our new pixels to the canvas
         context.putImageData(imageData, 0, 0);
@@ -95,13 +106,28 @@ function start(model) {
 
     // Muda o estado da Flag que controla a rotação
     document.getElementById('iniciarTelaCheia').addEventListener('click', () => {
-        /** @type {HTMLCanvasElement} @ts-expect-error*/
-        //@ts-expect-error
+        /** @type {HTMLCanvasElement} */ //@ts-expect-error
         let canvas = document.getElementById("canvas");
 
         canvas.requestFullscreen();
     });
+    
+    /** @type {HTMLInputElement} */ //@ts-expect-error
+    const inputWireframeCheck = document.getElementById('wireframeCheck');
+
+    // Seta a escuta por mudanças de estado do checkbox
+    inputWireframeCheck.addEventListener('change', () => {
+        wireframeRender = inputWireframeCheck.checked;
+
+        // Se não estiver animando, força um novo `render`
+        if (stopped) {
+            updateDrawing();
+        }
+    });
+
+    // Seta o estado inicial da sessão
+    inputWireframeCheck.checked = wireframeRender;
 }
 
-// run our program when the document's loaded
+// Configuramos nosso programa para executar após o documento carregar
 window.addEventListener('load', loadAndStartModel);

@@ -1,4 +1,5 @@
 import DepthBuffer from './depthBuffer.js';
+import drawLine from './drawLine.js';
 import fillTriangle from './fillTriangle.js';
 
 /**
@@ -71,9 +72,6 @@ export default function render(model, imageData, depthBuffer, {
                 var v1value = v1.z / 4.5 + 0.5;
                 var v2value = v2.z / 4.5 + 0.5;
                     
-                // drawLine(imageData, centerX + v0.x * scale, centerY - v0.y * scale, centerX + v1.x * scale, centerY - v1.y * scale);
-                // drawLine(imageData, centerX + v1.x * scale, centerY - v1.y * scale, centerX + v2.x * scale, centerY - v2.y * scale);
-                // drawLine(imageData, centerX + v2.x * scale, centerY - v2.y * scale, centerX + v0.x * scale, centerY - v0.y * scale);
                 fillTriangle(
                     imageData,
                     depthBuffer,
@@ -92,23 +90,37 @@ export default function render(model, imageData, depthBuffer, {
             if (!v2) { console.log("Vertice " + (face[2] - 1) + " not found!"); }
         }
     }
-    // fillTriangle(
-    //     imageData,
-    //     { x: 200.5, y: 400.5, z: 0, r: 1.0, g: 0.0, b: 0.0 },
-    //     { x: 250.5, y: 150.5, z: 0, r: 0.0, g: 1.0, b: 0.0 },
-    //     { x: 90.5, y: 250.5, z: 0, r: 0.0, g: 0.0, b: 1.0 }
-    // );
-    // fillTriangle(
-    //     imageData,
-    //     { x: 10, y: 10, z: 0, r: 0.3, g: 0.3, b: 0.3 },
-    //     { x: 10, y: 110, z: 0, r: 0.3, g: 0.3, b: 0.3 },
-    //     { x: 110, y: 10, z: 0, r: 0.3, g: 0.3, b: 0.3 }
-    // );
-    // fillTriangle(
-    //     imageData,
-    //     { x: 110, y: 10, z: 0, r: 0.3, g: 0.3, b: 0.3 },
-    //     { x: 10, y: 110, z: 0, r: 0.3, g: 0.3, b: 0.3 },
-    //     { x: 110, y: 110, z: 0, r: 0.3, g: 0.3, b: 0.3 }
-    // );
+    console.timeEnd('tempo para rasterizar as linhas');
+}
+
+/**
+ * 
+ * @param {{ verts: Vec3[], faces: number[][] }} model 
+ * @param {ImageData} imageData 
+ */
+export function renderWireframe(model, imageData, {
+    centerX, centerY, scale
+}) {
+    console.time('tempo para rasterizar as linhas');
+    // draw our model
+    for (var i = 0; i < model.faces.length; i++) {
+        var face = model.faces[i];
+        var v0 = model.verts[face[0] - 1];
+        var v1 = model.verts[face[1] - 1];
+        var v2 = model.verts[face[2] - 1];
+        
+        if (v0 && v1 && v2) {
+            if (isCcw(v0, v1, v2)) {
+                drawLine(imageData, centerX + v0.x * scale, centerY - v0.y * scale, centerX + v1.x * scale, centerY - v1.y * scale);
+                drawLine(imageData, centerX + v1.x * scale, centerY - v1.y * scale, centerX + v2.x * scale, centerY - v2.y * scale);
+                drawLine(imageData, centerX + v2.x * scale, centerY - v2.y * scale, centerX + v0.x * scale, centerY - v0.y * scale);
+            }
+        }
+        else {
+            if (!v0) { console.log("Vertice " + (face[0] - 1) + " not found!"); }
+            if (!v1) { console.log("Vertice " + (face[1] - 1) + " not found!"); }
+            if (!v2) { console.log("Vertice " + (face[2] - 1) + " not found!"); }
+        }
+    }
     console.timeEnd('tempo para rasterizar as linhas');
 }
