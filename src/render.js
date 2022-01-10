@@ -18,15 +18,15 @@ export function  rotate(point, angle, cx, cy) {
     const s = Math.sin(angle);
     const c = Math.cos(angle);
     
-    // translate point back to origin:
+    // faz a translação do ponto de volta a origem
     point.x -= cx;
     point.y -= cy;
     
-    // rotate point
+    // rotaciona os pontos
     const xnew = point.x * c - point.y * s;
     const ynew = point.x * s + point.y * c;
     
-    // translate point back:
+    // desfaz a translação do ponto de volta a origem
     point.x = xnew + cx;
     point.y = ynew + cy;
 }
@@ -44,6 +44,7 @@ export function clear(context, color, width, height) {
 }
 
 // returns true if vertices are in counterclockwise order
+// Retorna `true` se as vértices estão sentido anti-horário
 export function isCcw(v0, v1, v2) {
     return (v1.x - v0.x) * (v2.y - v0.y) - (v1.y - v0.y) * (v2.x - v0.x) >= 0;
 }
@@ -58,7 +59,7 @@ export default function render(model, imageData, depthBuffer, {
     centerX, centerY, scale, zNear, zFar
 }) {
     console.time('tempo para rasterizar as linhas');
-    // draw our model
+    // Renderiza o nosso modelo
     for (var i = 0; i < model.faces.length; i++) {
         var face = model.faces[i];
         var v0 = model.verts[face[0] - 1];
@@ -67,7 +68,7 @@ export default function render(model, imageData, depthBuffer, {
         
         if (v0 && v1 && v2) {
             if (isCcw(v0, v1, v2)) {
-                // create some greyscale values from the model's Z values
+                // Cria alguns valores de tons de cinza a partir do valor do eixo Z do modelo
                 var v0value = v0.z / 4.5 + 0.5;
                 var v1value = v1.z / 4.5 + 0.5;
                 var v2value = v2.z / 4.5 + 0.5;
@@ -102,7 +103,7 @@ export function renderWireframe(model, imageData, {
     centerX, centerY, scale
 }) {
     console.time('tempo para rasterizar as linhas');
-    // draw our model
+    // Renderiza o nosso modelo
     for (var i = 0; i < model.faces.length; i++) {
         var face = model.faces[i];
         var v0 = model.verts[face[0] - 1];

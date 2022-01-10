@@ -3,16 +3,16 @@
  */
 
 /**
- * parses an obj file from a text string
+ * Parseia um arquivo `.obj` a partir de um string
  * 
- * @param {string} text 
+ * @param {string} text String contendo o valor do conteúdo lido do arquivo `.obj`
  * @returns {{ verts: Vec3[], faces: number[][] }}
  */
 export default function parseObj(text) {
     var verts = [];
     var faces = [];
 
-    // split the text into lines
+    // separa o texto em linhas
     var lines = text.replace('\r', '').split('\n');
     var count = lines.length;
 
@@ -49,7 +49,7 @@ export default function parseObj(text) {
         }
     }
 
-    // return an object containing our vertices and faces
+    // retorna um objeto com as vértices e faces
     return {
         verts: verts,
         faces: faces

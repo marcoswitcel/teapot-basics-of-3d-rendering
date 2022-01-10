@@ -1,5 +1,5 @@
 /**
- *
+ * Classe que representa o vetor de três dimensões
  */
 export default class Vec3
 {
