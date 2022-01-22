@@ -15,8 +15,8 @@ Apenas clone o reposítório e sirva os arquivos através de um server HTTP. Use
 
 ## Ambiente de desenvolvimento e técnicas usadas
 
-Para desenvolver usei a IDE [Visul Studio](https://code.visualstudio.com/), a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) para a mesma IDE.
-Como técnica fiz uso de modularização seguindo o padrão moderno [Módulos ES6](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules), com documentação seguindo o [Padrão de documentação de tipos JSDoc](https://jsdoc.app/) e com o [arquivo JSConfig e a diretiva checkJs](https://code.visualstudio.com/docs/languages/jsconfig) configurados para forçar a checagem de tipos e suporte.
+Para desenvolver usei a IDE [Visual Studio](https://code.visualstudio.com/), a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) para a mesma IDE.
+Como técnica fiz uso de modularização seguindo o padrão moderno [módulos ES6](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules), com documentação seguindo o [padrão de documentação de tipos JSDoc](https://jsdoc.app/) e com o [arquivo JSConfig e a diretiva checkJs](https://code.visualstudio.com/docs/languages/jsconfig) configurados para forçar a checagem de tipos e suporte.
 
 ## Referências
 
