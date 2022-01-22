@@ -7,7 +7,7 @@ Esse repositório contém código que produzi a partir do estudo e compreensão 
 * [Software 3D rendering in JavaScript, Part 2: Triangles Galore](https://kitsunegames.com/post/development/2016/07/28/software-3d-rendering-in-javascript-pt2/)
 
 O material é de ótima qualidade, porém infelizmente só disponível em Inglês.
-Realizei a adaptação do código para fazer uso de [Módulos ES6](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules) e por consequência, pude modularizá-lo um pouco, embora não tenha sido muito bem organizado ainda.
+Realizei a adaptação do código para fazer uso de [módulos ES6](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules) e por consequência, pude modularizá-lo um pouco, embora não tenha sido muito bem organizado ainda.
 
 ## Para rodar
 
