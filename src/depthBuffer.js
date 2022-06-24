@@ -1,3 +1,12 @@
+
+/**
+ * # DepthBuffer
+ * 
+ * Classe usada para representar e agrupar funcionalidades
+ * relacionadas a um buffer de profundidade.
+ * O Buffer Uint16Array tem uma relação espaço de armazenamento e
+ * precisão apropriados para a necessidade desse renderizador.
+ */
 export default class DepthBuffer extends Uint16Array {
     /**
      * 
@@ -12,7 +21,7 @@ export default class DepthBuffer extends Uint16Array {
     }
 
     /**
-     * seta todos os pixeis para o valor máximo de um UInt16  ( 65535 )
+     * seta todos os pixels para o valor máximo de um UInt16  ( 65535 )
      */
     clear() {
         this.fill(65535);

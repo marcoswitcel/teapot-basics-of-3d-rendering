@@ -35,45 +35,43 @@ function start(model) {
     const HEIGHT = 480;
 
     /** @type {HTMLCanvasElement} */ //@ts-expect-error
-    let canvas = document.getElementById("canvas");
+    const canvas = document.getElementById("canvas");
 
     // Seta o novo tamanho do canvas
     canvas.width = WIDTH;
     canvas.height = HEIGHT;
 
-    var context = canvas.getContext("2d");
+    const context = canvas.getContext("2d");
     
-    // create depth buffer
-    // use Uint16 because we only need a little precision and we save 2 bytes per pixel this way
     const depthBuffer = new DepthBuffer(WIDTH, HEIGHT);
     
     const updateDrawing = function update() {
         depthBuffer.clear();
         clear(context, "rgb(100, 149, 237)", WIDTH, HEIGHT);
     
-        // get image data for direct pixel access
-        var imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
+        // Pega o objeto do tipo ImageData para permitir manipular os pixels
+        const imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
     
         if (wireframeRender) {
             renderWireframe(model, imageData, {
-                // some drawing positioning
+                // Configurações de renderização em relação a tela
                 centerX : WIDTH / 2.0,
                 centerY : HEIGHT / 2.0 + 150,
                 scale : 100,
             });
         } else {
             render(model, imageData, depthBuffer, {
-                // some drawing positioning
+                // Configurações de renderização em relação a tela
                 centerX : WIDTH / 2.0,
                 centerY : HEIGHT / 2.0 + 150,
                 scale : 100,
-                // create our zFar and zNear clip planes
+                // configurando zFar e zNear clip planes
                 zFar  : -3.5,
                 zNear : 3.5,
             });
         }
     
-        // write our new pixels to the canvas
+        // transfere o buffer de pixels de volta para o canvas
         context.putImageData(imageData, 0, 0);
         
         
