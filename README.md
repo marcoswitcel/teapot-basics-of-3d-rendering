@@ -9,6 +9,8 @@ Esse repositório contém código que produzi a partir do estudo e compreensão 
 O material é de ótima qualidade, porém infelizmente só disponível em Inglês.
 Realizei a adaptação do código para fazer uso de [módulos ES6](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules) e por consequência, pude modularizá-lo um pouco, embora não tenha sido muito bem organizado ainda.
 
+Link da página do GitHub Pages: [https://marcoswitcel.github.io/teapot-basics-of-3d-rendering/](https://marcoswitcel.github.io/teapot-basics-of-3d-rendering/)
+
 ## Para rodar
 
 Apenas clone o reposítório e sirva os arquivos através de um server HTTP. Usei a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) durante o desenvolvimento, analise a seção "Ambiente de desenvolvimento e técnicas usadas".
