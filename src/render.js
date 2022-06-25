@@ -34,7 +34,7 @@ export function  rotate(point, angle, cx, cy) {
 /**
  * 
  * @param {*} context 
- * @param {String} color 
+ * @param {string} color 
  * @param {*} width 
  * @param {*} height 
  */
@@ -43,7 +43,6 @@ export function clear(context, color, width, height) {
     context.fillRect(0, 0, width, height);
 }
 
-// returns true if vertices are in counterclockwise order
 // Retorna `true` se as vértices estão sentido anti-horário
 export function isCcw(v0, v1, v2) {
     return (v1.x - v0.x) * (v2.y - v0.y) - (v1.y - v0.y) * (v2.x - v0.x) >= 0;
@@ -60,18 +59,18 @@ export default function render(model, imageData, depthBuffer, {
 }) {
     console.time('tempo para rasterizar as linhas');
     // Renderiza o nosso modelo
-    for (var i = 0; i < model.faces.length; i++) {
-        var face = model.faces[i];
-        var v0 = model.verts[face[0] - 1];
-        var v1 = model.verts[face[1] - 1];
-        var v2 = model.verts[face[2] - 1];
+    for (let i = 0; i < model.faces.length; i++) {
+        const face = model.faces[i];
+        const v0 = model.verts[face[0] - 1];
+        const v1 = model.verts[face[1] - 1];
+        const v2 = model.verts[face[2] - 1];
         
         if (v0 && v1 && v2) {
             if (isCcw(v0, v1, v2)) {
                 // Cria alguns valores de tons de cinza a partir do valor do eixo Z do modelo
-                var v0value = v0.z / 4.5 + 0.5;
-                var v1value = v1.z / 4.5 + 0.5;
-                var v2value = v2.z / 4.5 + 0.5;
+                const v0value = v0.z / 4.5 + 0.5;
+                const v1value = v1.z / 4.5 + 0.5;
+                const v2value = v2.z / 4.5 + 0.5;
                     
                 fillTriangle(
                     imageData,
@@ -104,11 +103,11 @@ export function renderWireframe(model, imageData, {
 }) {
     console.time('tempo para rasterizar as linhas');
     // Renderiza o nosso modelo
-    for (var i = 0; i < model.faces.length; i++) {
-        var face = model.faces[i];
-        var v0 = model.verts[face[0] - 1];
-        var v1 = model.verts[face[1] - 1];
-        var v2 = model.verts[face[2] - 1];
+    for (let i = 0; i < model.faces.length; i++) {
+        const face = model.faces[i];
+        const v0 = model.verts[face[0] - 1];
+        const v1 = model.verts[face[1] - 1];
+        const v2 = model.verts[face[2] - 1];
         
         if (v0 && v1 && v2) {
             if (isCcw(v0, v1, v2)) {

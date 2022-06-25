@@ -1,3 +1,4 @@
+
 /**
  * @typedef {import('./Vec3.js').default} Vec3
  */
@@ -9,28 +10,27 @@
  * @returns {{ verts: Vec3[], faces: number[][] }}
  */
 export default function parseObj(text) {
-    var verts = [];
-    var faces = [];
+    const verts = [];
+    const faces = [];
 
     // separa o texto em linhas
-    var lines = text.replace('\r', '').split('\n');
-    var count = lines.length;
+    const lines = text.replace('\r', '').split('\n');
+    const numberOfLines = lines.length;
 
-    for (var i = 0; i < count; i++) {
-        var line = lines[i];
+    for (let i = 0; i < numberOfLines; i++) {
+        const line = lines[i];
+        const tokens = line.split(' ');
 
         if (line[0] == 'v') {
-            // lines that start with 'v' are vertices
-            var tokens = line.split(' ');
+            // linhas que começam com 'v' são vértices
             verts.push({
                 x: parseFloat(tokens[1]),
                 y: parseFloat(tokens[2]),
                 z: parseFloat(tokens[3])
             });
         } else if (line[0] == 'f') {
-            // lines that start with 'f' are faces
-            var tokens = line.split(' ');
-            var face = [
+            // linhas que começam com 'f' são faces
+            const face = [
                 parseInt(tokens[1], 10),
                 parseInt(tokens[2], 10),
                 parseInt(tokens[3], 10)

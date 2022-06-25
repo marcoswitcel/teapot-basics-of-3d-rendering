@@ -35,16 +35,16 @@ export default function drawLine(imageData, x0, y0, x1, y1) {
         tmp = y0; y0 = y1; y1 = tmp;
     }
     
-    var yStep = (y0 < y1) ? 1 : -1;
+    const yStep = (y0 < y1) ? 1 : -1;
     
-    var deltaX = x1 - x0;
-    var deltaY = Math.abs(y1 - y0);
-    var error = 0;
+    const deltaX = x1 - x0;
+    const deltaY = Math.abs(y1 - y0);
+    let error = 0;
     
-    var index = 0;
-    var y = y0;
+    let index = 0;
+    let y = y0;
     
-    for (var x = x0; x <= x1; x++) {
+    for (let x = x0; x <= x1; x++) {
         // index is vertical coordinate times width, plus horizontal coordinate, 
         // times 4 because every pixel consists of 4 bytes
         if (steep) {

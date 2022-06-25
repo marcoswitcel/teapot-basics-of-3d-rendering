@@ -37,11 +37,11 @@ export default class DepthBuffer extends Uint16Array {
     }
 
     testDepth(x, y, v) {
-        var value = (v * 65535) | 0;
+        const value = (v * 65535) | 0;
         if (value < 0 || value > 65535) {
             return false;
         }
-        var index = y * this.width + x;
+        const index = y * this.width + x;
         if (value < this[index]) {
             this[index] = value;
             return true;

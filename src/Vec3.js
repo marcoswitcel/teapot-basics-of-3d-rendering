@@ -1,3 +1,4 @@
+
 /**
  * Classe que representa o vetor de três dimensões
  */

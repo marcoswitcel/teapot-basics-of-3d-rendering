@@ -76,7 +76,7 @@ function start(model) {
         
         
         console.time('tempo para rotacionar o bule:');
-        model.verts.map(e => {
+        model.verts.forEach(e => {
             const point = {x: e.x, y: e.z};
             rotate(point, Math.PI / 180 * 1, 0,0);
             e.x = point.x;
