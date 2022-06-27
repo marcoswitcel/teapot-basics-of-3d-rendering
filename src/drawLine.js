@@ -1,13 +1,14 @@
+
 /**
  * Desenha uma linha usando o algorítmo de Bresenham (versão que usa números inteiros)
  * @note https://github.com/ssloy/tinyrenderer/wiki/Lesson-1:-Bresenham%E2%80%99s-Line-Drawing-Algorithm
  * 
  * 
  * @param {ImageData} imageData 
- * @param {Number} x0 
- * @param {Number} y0 
- * @param {Number} x1 
- * @param {Number} y1 
+ * @param {number} x0 
+ * @param {number} y0 
+ * @param {number} x1 
+ * @param {number} y1 
  * 
  * @returns {void}
  */
