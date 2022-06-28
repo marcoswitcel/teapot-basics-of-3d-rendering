@@ -13,6 +13,10 @@ let stopped = true;
 /** @type {boolean} */
 let wireframeRender = isMobile();
 
+let lastTime = 0;
+let deltaTime = 0;
+const ANGLES_PER_SECOND = Math.PI / 180 * 20;
+
 // Carrega 
 async function loadAndStartModel() {
     const response = await fetch('teapot.obj')
@@ -48,7 +52,24 @@ function start(model) {
     const imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
     const uint32View = new Uint32Array(imageData.data.buffer);
     
-    const updateDrawing = function update() {
+    /**
+     * @param {number} timestamp Quando timestamp é igual a 0 reseta as
+     * variáveis de controle pois deve ser o primeiro frame
+     * @returns 
+     */
+    const updateDrawing = function update(timestamp) {
+        if (timestamp) {
+            if (lastTime) {
+                deltaTime = timestamp - lastTime;
+                lastTime = timestamp;
+            } else {
+                deltaTime = 0;
+                lastTime = timestamp;
+            }
+        } else {
+            deltaTime = 0;
+            lastTime = 0;
+        }
 
         depthBuffer.clear();
         // rgb(100, 149, 237)
@@ -76,30 +97,31 @@ function start(model) {
         // transfere o buffer de pixels de volta para o canvas
         context.putImageData(imageData, 0, 0);
         
-        
-        console.time('tempo para rotacionar o bule:');
-        const point = { x: 0, y: 0 };
-        for (const e of model.verts) {
-            point.x = e.x;
-            point.y = e.z;
-            rotate(point, Math.PI / 180 * 1, 0,0);
-            e.x = point.x;
-            e.z = point.y;
+        if (timestamp) {
+            console.time('tempo para rotacionar o bule:');
+            const point = { x: 0, y: 0 };
+            for (const e of model.verts) {
+                point.x = e.x;
+                point.y = e.z;
+                rotate(point, ANGLES_PER_SECOND * (deltaTime / 1000), 0, 0);
+                e.x = point.x;
+                e.z = point.y;
+            }
+            console.timeEnd('tempo para rotacionar o bule:');
         }
-        console.timeEnd('tempo para rotacionar o bule:');
 
         if (stopped) return;
         requestAnimationFrame(update);
     }
 
     // Força primeiro desenho
-    updateDrawing();
+    updateDrawing(0);
 
     // Muda o estado da Flag que controla a rotação e chama a função de desenho de novo
     document.getElementById('iniciarRotacao').addEventListener('click', () => {
         if (stopped) {
             stopped = !stopped;
-            updateDrawing();
+            updateDrawing(0);
         } else {
             stopped = !stopped;
         }
@@ -122,7 +144,7 @@ function start(model) {
 
         // Se não estiver animando, força um novo `render`
         if (stopped) {
-            updateDrawing();
+            updateDrawing(0);
         }
     });
 
