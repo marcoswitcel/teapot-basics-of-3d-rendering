@@ -1,6 +1,6 @@
 import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
-import render, { clear, renderWireframe, rotate } from './render.js';
+import render, { renderWireframe, rotate } from './render.js';
 import { isMobile } from './utils.js';
 
 /**
@@ -42,15 +42,17 @@ function start(model) {
     canvas.height = HEIGHT;
 
     const context = canvas.getContext("2d");
-    
     const depthBuffer = new DepthBuffer(WIDTH, HEIGHT);
+
+    // Pega o objeto do tipo ImageData para permitir manipular os pixels
+    const imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
+    const uint32View = new Uint32Array(imageData.data.buffer);
     
     const updateDrawing = function update() {
+
         depthBuffer.clear();
-        clear(context, "rgb(100, 149, 237)", WIDTH, HEIGHT);
-    
-        // Pega o objeto do tipo ImageData para permitir manipular os pixels
-        const imageData = context.getImageData(0, 0, WIDTH, HEIGHT);
+        // rgb(100, 149, 237)
+        uint32View.fill(0xFFED9564)
     
         if (wireframeRender) {
             renderWireframe(model, imageData, {
@@ -76,13 +78,14 @@ function start(model) {
         
         
         console.time('tempo para rotacionar o bule:');
-        model.verts.forEach(e => {
-            const point = {x: e.x, y: e.z};
+        const point = { x: 0, y: 0 };
+        for (const e of model.verts) {
+            point.x = e.x;
+            point.y = e.z;
             rotate(point, Math.PI / 180 * 1, 0,0);
             e.x = point.x;
             e.z = point.y;
-            return  e;
-        })
+        }
         console.timeEnd('tempo para rotacionar o bule:');
 
         if (stopped) return;
