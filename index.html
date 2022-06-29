@@ -26,7 +26,7 @@
             margin: 32px auto 0;
             text-align: center;
         }
-        .wireframeCheckLabel, button {
+        .checkLabel, button {
             display: inline-block;
             cursor: pointer;
             font-size: 16px;
@@ -35,7 +35,7 @@
             border: 1px solid black;
             margin: 2px;
         }
-        .wireframeCheckLabel input {
+        .checkLabel input {
             margin: 0;
         }
     </style>
@@ -44,9 +44,12 @@
     <h1>Renderização 3D com JavaScript - Teapot</h1>
     <canvas id="canvas" moz-opaque style="border: 1px solid black"></canvas>
     <div class="buttons">
-        <button id="iniciarRotacao" type="button">Ativar animação de rotação</button>
         <button id="iniciarTelaCheia" type="button">Entrar em modo tela cheia</button>
-        <label class="wireframeCheckLabel">
+        <label class="checkLabel">
+            <input type="checkbox" name="wireframe" id="iniciarRotacaoCheck">
+            Animação de rotação
+        </label>
+        <label class="checkLabel">
             <input type="checkbox" name="wireframe" id="wireframeCheck">
             Modo wireFrame
         </label>

@@ -117,15 +117,16 @@ function start(model) {
     // Força primeiro desenho
     updateDrawing(0);
 
+    /** @type {HTMLInputElement} */ //@ts-expect-error
+    const iniciarRotacaoCheck = document.getElementById('iniciarRotacaoCheck');
     // Muda o estado da Flag que controla a rotação e chama a função de desenho de novo
-    document.getElementById('iniciarRotacao').addEventListener('click', () => {
-        if (stopped) {
-            stopped = !stopped;
+    iniciarRotacaoCheck.addEventListener('change', () => {
+        stopped = !iniciarRotacaoCheck.checked;
+        if (!stopped) {
             updateDrawing(0);
-        } else {
-            stopped = !stopped;
         }
     });
+    iniciarRotacaoCheck.checked = !stopped;
 
     // Muda o estado da Flag que controla a rotação
     document.getElementById('iniciarTelaCheia').addEventListener('click', () => {
