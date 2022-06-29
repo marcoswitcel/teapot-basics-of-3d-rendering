@@ -43,7 +43,7 @@ export function clear(context, color, width, height) {
     context.fillRect(0, 0, width, height);
 }
 
-// Retorna `true` se as vértices estão sentido anti-horário
+// Retorna `true` se as vértices estão no sentido anti-horário
 export function isCcw(v0, v1, v2) {
     return (v1.x - v0.x) * (v2.y - v0.y) - (v1.y - v0.y) * (v2.x - v0.x) >= 0;
 }
