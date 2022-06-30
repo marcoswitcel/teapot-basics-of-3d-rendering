@@ -2,6 +2,13 @@ import Vec3 from "./Vec3.js";
 import DepthBuffer from "./depthBuffer.js";
 
 /**
+ * @typedef {{
+ *    x: number, y: number, z: number,
+ *    r: number, g: number, b: number
+ * }} VertexFragment
+ */
+
+/**
  * @param {Vec3} a 
  * @param {Vec3} b 
  * @param {Vec3} c 
@@ -15,9 +22,9 @@ function cross(a, b, c) {
  * 
  * @param {ImageData} imageData 
  * @param {DepthBuffer} depthBuffer
- * @param {any} v0 
- * @param {any} v1 
- * @param {any} v2 
+ * @param {VertexFragment} v0 
+ * @param {VertexFragment} v1 
+ * @param {VertexFragment} v2 
  */
 export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
 {
@@ -31,21 +38,20 @@ export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
   
     // precalculate the area of the parallelogram defined by our triangle
     const area = cross(v0, v1, v2);
-  
-    // get all properties on our first vertex, for interpolating later
-    const props = Object.getOwnPropertyNames(v0);
     
     // p is our 2D pixel location point
     /** @type {Vec3} */
     const p = {};  
     
     // fragment is the resulting pixel with all the vertex attributes interpolated
+    /** @type {VertexFragment} */
     const fragment = {};
     
     for (let y = minY; y < maxY; y++) {
         for (let x = minX; x < maxX; x++) {
             // sample from the center of the pixel, not the top-left corner
-            p.x = x + 0.5; p.y = y + 0.5;
+            p.x = x + 0.5;
+            p.y = y + 0.5;
 
             // calculate vertex weights
             // should divide these by area, but we do that later
@@ -75,23 +81,24 @@ export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
             if ((w0 == 0 && edgeRight0) || (w1 == 0 && edgeRight1) || (w2 == 0 && edgeRight2)) {
                 continue;
             }
+            
+            // Interpolando propriedades das vértices (loop substituído para aumentar perfomance)
+            // Divide pelo valor da área pra normalizar
+            fragment.r = (w0 * v0.r + w1 * v1.r + w2 * v2.r) / area;
+            fragment.g = (w0 * v0.g + w1 * v1.g + w2 * v2.g) / area;
+            fragment.b = (w0 * v0.b + w1 * v1.b + w2 * v2.b) / area;
+            fragment.z = (w0 * v0.z + w1 * v1.z + w2 * v2.z) / area;
+            fragment.x = (w0 * v0.x + w1 * v1.x + w2 * v2.x) / area;
+            fragment.y = (w0 * v0.y + w1 * v1.y + w2 * v2.y) / area;
 
-            // interpolate our vertices
-            for (let i = 0; i < props.length; i++) {
-                const prop = props[i];
-
-                // divide by area here to normalize
-                fragment[prop] = (w0 * v0[prop] + w1 * v1[prop] + w2 * v2[prop]) / area;
-            }
-
-            // returns true and replaces the value if fragment.z is less than the stored value
-            if (typeof fragment.z !== "number" || depthBuffer.testDepth(x, y, fragment.z)) {
-                // set pixel
+            // Substitui o pixel se o atributo z for menor que o valor de z no deapthBuffer
+            if (depthBuffer.testDepth(x, y, fragment.z)) {
+                // cálcula o índice do píxel
                 const index = (y * width + x) * 4;
-                data[index] = typeof fragment.r === "number" ? (fragment.r * 256) | 0 : 0;
-                data[index + 1] = typeof fragment.g === "number" ? (fragment.g * 256) | 0 : 0;
-                data[index + 2] = typeof fragment.b === "number" ? (fragment.b * 256) | 0 : 0;
-                data[index + 3] = typeof fragment.a === "number" ? (fragment.a * 256) | 0 : 255;
+                data[index] = (fragment.r * 256) | 0;
+                data[index + 1] = (fragment.g * 256) | 0;
+                data[index + 2] = (fragment.b * 256) | 0;
+                data[index + 3] = 255;
             }
         }
     }
