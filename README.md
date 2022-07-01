@@ -17,7 +17,7 @@ Apenas clone o reposítório e sirva os arquivos através de um server HTTP. Use
 
 ## Ambiente de desenvolvimento e técnicas usadas
 
-Durante o desenvolvimento utilizei a IDE [Visual Studio](https://code.visualstudio.com/) com a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
+Durante o desenvolvimento utilizei a IDE [Visual Studio Code](https://code.visualstudio.com/) com a extensão [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer).
 Como técnica fiz uso de modularização seguindo o padrão moderno [módulos ES6](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules), com documentação seguindo o [padrão de documentação de tipos JSDoc](https://jsdoc.app/) e com o [arquivo JSConfig e a diretiva checkJs](https://code.visualstudio.com/docs/languages/jsconfig) configurados para forçar a checagem de tipos, evitando assim vários erros, e melhorar as sugestões da IDE.
 
 ## Referências
