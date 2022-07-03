@@ -36,31 +36,31 @@ export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
     const data = imageData.data;
     const width = imageData.width;
   
-    // precalculate the area of the parallelogram defined by our triangle
+    // calcula a área do paralelogramo definido pelo nosso triângulo
     const area = cross(v0, v1, v2);
     
-    // p is our 2D pixel location point
+    // p contém a localização do nosso pixel no plano 2D
     /** @type {Vec3} */
     const p = {};  
     
-    // fragment is the resulting pixel with all the vertex attributes interpolated
+    // fragment é o pixel resultante com todos os atributos da vertex interpolados
     /** @type {VertexFragment} */
     const fragment = {};
     
     for (let y = minY; y < maxY; y++) {
         for (let x = minX; x < maxX; x++) {
-            // sample from the center of the pixel, not the top-left corner
+            // vamos extrair a cor do centro do pixel, não do topo-esquerdo
             p.x = x + 0.5;
             p.y = y + 0.5;
 
-            // calculate vertex weights
-            // should divide these by area, but we do that later
-            // so we divide once, not three times
+            // calcula o peso das vertex
+            // deveríamos dividir pela área, mas fazemos isso depois
+            // para dividir apenas uma vez e não três
             const w0 = cross(v1, v2, p);
             const w1 = cross(v2, v0, p);
             const w2 = cross(v0, v1, p);
   
-            // calculate edges
+            // calculamos as extremidades
             const edge0 = { x: v2.x - v1.x, y: v2.y - v1.y };
             const edge1 = { x: v0.x - v2.x, y: v0.y - v2.y };
             const edge2 = { x: v1.x - v0.x, y: v1.y - v0.y };
