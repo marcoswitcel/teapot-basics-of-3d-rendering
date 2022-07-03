@@ -57,7 +57,6 @@ export function isCcw(v0, v1, v2) {
 export default function render(model, imageData, depthBuffer, {
     centerX, centerY, scale, zNear, zFar
 }) {
-    console.time('tempo para rasterizar as linhas');
     // Renderiza o nosso modelo
     for (let i = 0; i < model.faces.length; i++) {
         const face = model.faces[i];
@@ -90,7 +89,6 @@ export default function render(model, imageData, depthBuffer, {
             if (!v2) { console.log("Vertice " + (face[2] - 1) + " not found!"); }
         }
     }
-    console.timeEnd('tempo para rasterizar as linhas');
 }
 
 /**
@@ -101,7 +99,6 @@ export default function render(model, imageData, depthBuffer, {
 export function renderWireframe(model, imageData, {
     centerX, centerY, scale
 }) {
-    console.time('tempo para rasterizar as linhas');
     // Renderiza o nosso modelo
     for (let i = 0; i < model.faces.length; i++) {
         const face = model.faces[i];
@@ -122,5 +119,4 @@ export function renderWireframe(model, imageData, {
             if (!v2) { console.log("Vertice " + (face[2] - 1) + " not found!"); }
         }
     }
-    console.timeEnd('tempo para rasterizar as linhas');
 }

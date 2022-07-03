@@ -1,17 +1,17 @@
 import parseObj from './parseObj.js';
 import DepthBuffer from './depthBuffer.js';
 import render, { renderWireframe, rotate } from './render.js';
-import { isMobile } from './utils.js';
+import { getBooleanParam, hasParam, isMobile } from './utils.js';
 
 /**
  * @typedef {import('./Vec3.js').default} Vec3
  */
 
 /** @type {boolean} */
-let stopped = true;
+let stopped = hasParam('rotate') ? !getBooleanParam('rotate') : true;
 
 /** @type {boolean} */
-let wireframeRender = isMobile();
+let wireframeRender = hasParam('wireframe') ? getBooleanParam('wireframe') : isMobile();
 
 let lastTime = 0;
 let deltaTime = 0;
@@ -76,13 +76,16 @@ function start(model) {
         uint32View.fill(0xFFED9564)
     
         if (wireframeRender) {
+            console.time('tempo para rasterizar as linhas');
             renderWireframe(model, imageData, {
                 // Configurações de renderização em relação a tela
                 centerX : WIDTH / 2.0,
                 centerY : HEIGHT / 2.0 + 150,
                 scale : 100,
             });
+            console.timeEnd('tempo para rasterizar as linhas');
         } else {
+            console.time('tempo para rasterizar os triângulos');
             render(model, imageData, depthBuffer, {
                 // Configurações de renderização em relação a tela
                 centerX : WIDTH / 2.0,
@@ -92,6 +95,7 @@ function start(model) {
                 zFar  : -3.5,
                 zNear : 3.5,
             });
+            console.timeEnd('tempo para rasterizar os triângulos');
         }
     
         // transfere o buffer de pixels de volta para o canvas
