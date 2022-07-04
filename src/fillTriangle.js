@@ -71,13 +71,13 @@ export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
             const edgeRight1 = edge1.y < 0 || (edge1.y == 0 && edge0.x > 0);
             const edgeRight2 = edge2.y < 0 || (edge2.y == 0 && edge0.x > 0);
 
-            // if the point is not inside our polygon, skip fragment
+            // Se o ponto não está dentro do nosso polígono, pula o fragment
             if (w0 < 0 || w1 < 0 || w2 < 0) {
                 continue;
             }
-
                   
-            // if this is a right or bottom edge, skip fragment (top-left rule):
+            // Se esse for um pixel da borda direita ou da borda de baixo, pula 
+            // o fragment (regra do topo-esquerdo)
             if ((w0 == 0 && edgeRight0) || (w1 == 0 && edgeRight1) || (w2 == 0 && edgeRight2)) {
                 continue;
             }
