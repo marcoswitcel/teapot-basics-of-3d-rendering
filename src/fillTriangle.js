@@ -65,8 +65,8 @@ export default function fillTriangle(imageData, depthBuffer, v0, v1, v2)
             const edge1 = { x: v0.x - v2.x, y: v0.y - v2.y };
             const edge2 = { x: v1.x - v0.x, y: v1.y - v0.y };
             
-            // calculate which edges are right edges so we can easily skip them
-            // right edges go up, or (bottom edges) are horizontal edges that go right
+            // calcula quais são as bordas verticais pra que possamos pulalas
+            // bordas verticais vão pra cima, ou bordas horizontais que vão pra direita
             const edgeRight0 = edge0.y < 0 || (edge0.y == 0 && edge0.x > 0);
             const edgeRight1 = edge1.y < 0 || (edge1.y == 0 && edge0.x > 0);
             const edgeRight2 = edge2.y < 0 || (edge2.y == 0 && edge0.x > 0);
